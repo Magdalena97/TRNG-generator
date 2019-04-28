@@ -23,6 +23,7 @@ context.beginPath();
 var histogram_data = new Array(255).fill(0);
 var histogram_data_from_source = new Array(255).fill(0);
 
+
 var long_string = '';
 var long_string_from_source = '';
 
@@ -168,11 +169,15 @@ canvas_input.addEventListener('mouseleave', function(e) {
 let tileWidth = canvas_input.width / 16;
 let tileHeight = canvas_input.height / 16;
 const button_binary = document.querySelector("#binary");
-
+var string = '';
+var text = "";
+let text_table = [];//tablica z znakami z textu
 const button_binary_action = function () {
-	clear(context2);
-	var string = '';
 
+	
+var znaki = transform_to_bin(canvas_output);
+//console.log(znaki);
+	clear(context2);
 	//Post-processing
 	var discretized = get_post_processing_coordinates(canvas_input, 5);
 	for (let b=0; b<50; b++) {
@@ -202,8 +207,82 @@ const button_binary_action = function () {
 	document.querySelector("#entropy2").innerHTML = entropy(long_string_from_source);
 	document.querySelector("#binary_input").value = long_string_from_source;
 	document.querySelector("#binary_output").value = long_string;
+	//console.log(string);
+	
+	text = bin_to_text(to_bin(string));
+	for(let j=0;j<32;j++){
+		text_table.push(text.charAt(j));
+	} 
+	document.getElementById("inputText1").value = text;
+	console.log("Po zamianie na text: " + text);
+	
 };
+//dzielinie ciagu znakow na 8-bitowe ciagi
+function to_bin(string){
+	let binCode = []; 
+	for(let i=0;i<string.length;i++){
+		if(i%8==0)
+			binCode.push(string.slice(i,i+8));
+	}
+	return binCode;
+}
+//zamiana 8-bitowych ciagów na litery 
+function bin_to_text(to_bin){
+	var binString = '';
+	to_bin.map(function(bin) {
+		binString += String.fromCharCode(65 + (parseInt(bin, 2))%25);
+	});
+	return binString;
+}
+let value_key = "";//wartosc klucza szyfrujacego
 
+const button_add_key = document.querySelector("#confirm");
+button_add_key.addEventListener('click', confirm_action);
+
+function confirm_action(){
+	value_key = document.getElementById("inputText2").value;
+	value_key = value_key.toUpperCase();
+	value_key = [...value_key];
+	let lenght = value_key.length;
+	
+	if(lenght!=32){
+		while(value_key.length<32){
+			value_key = value_key.concat(value_key);
+		}
+		value_key = value_key.splice(value_key-32,32);
+	}
+	console.log("Klucz szyfrujacy: " + value_key);
+	Vigenere_cipher(value_key);
+	
+}
+let table = ["A","B","C","D","E","F","G","H","I","J","K","L","M","N","O","P","Q","R","S","T","U","V","W","X","Y","Z"];
+
+function Vigenere_cipher(value_key){
+	let index = "";//index z table litery z badanego słowa
+	let przesuniecie = "";//indexz table litery z klucza 
+	let przesunieta_tab1 = [];//pomocnicza tablica
+	let przesunieta_tab2 = [];//pomocnicza tablica
+	let przesunieta_tab = [];//tablica z przesunietymi literami alfabetu
+	let zakodowane_slowo = [];//tablica z zakodowanym słowem
+	let znak1 = "";//badany znak z textu
+	let znak2 = "";//badany znak z hasla
+
+	for(let i=0; i<32;i++){
+		//index litery z tekstu
+		znak1=text_table[i];
+		index = table.indexOf(znak1);
+		//index litery z hasla
+		znak2=value_key[i];
+		przesuniecie = table.indexOf(znak2);
+		przesunieta_tab1 = table.slice(0,przesuniecie);
+		przesunieta_tab2 = table.slice(przesuniecie);
+		przesunieta_tab = [...przesunieta_tab2,...przesunieta_tab1];
+		zakodowane_slowo.push(przesunieta_tab[index]);
+		
+	}
+	console.log("Zakodowane słowo: " + zakodowane_slowo);
+	document.getElementById("inputText3").value = zakodowane_slowo.join("");
+ }
 button_binary.addEventListener('click', button_binary_action);
 
 const button_clear = document.querySelector("#clear");
