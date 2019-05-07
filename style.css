@@ -33,6 +33,10 @@ body {
 #inputText3 {
     width: 90%;
 }
+#inputText4 {
+    width: 90%;
+}
+
 
 input[type=text] {
     color: grey;
@@ -47,7 +51,4 @@ input[type=text] {
     background-repeat: no-repeat;
     padding: 12px 20px 12px 40px;
   }
-  /*#confirm{
-    float: right;
-    margin-right: 2%;
-  }*/
+ 

@@ -252,12 +252,12 @@ function confirm_action(){
 		value_key = value_key.splice(value_key-32,32);
 	}
 	console.log("Klucz szyfrujacy: " + value_key);
-	Vigenere_cipher(value_key);
-	
+	document.getElementById("inputText3").value = Vigenere_cipher(value_key,text_table).join("");
+	decoding();	
 }
 let table = ["A","B","C","D","E","F","G","H","I","J","K","L","M","N","O","P","Q","R","S","T","U","V","W","X","Y","Z"];
 
-function Vigenere_cipher(value_key){
+function Vigenere_cipher(value_key,text){
 	let index = "";//index z table litery z badanego słowa
 	let przesuniecie = "";//indexz table litery z klucza 
 	let przesunieta_tab1 = [];//pomocnicza tablica
@@ -269,7 +269,7 @@ function Vigenere_cipher(value_key){
 
 	for(let i=0; i<32;i++){
 		//index litery z tekstu
-		znak1=text_table[i];
+		znak1=text[i];
 		index = table.indexOf(znak1);
 		//index litery z hasla
 		znak2=value_key[i];
@@ -280,9 +280,20 @@ function Vigenere_cipher(value_key){
 		zakodowane_slowo.push(przesunieta_tab[index]);
 		
 	}
-	console.log("Zakodowane słowo: " + zakodowane_slowo);
-	document.getElementById("inputText3").value = zakodowane_slowo.join("");
+
+	return zakodowane_slowo;
  }
+ //----------------------DEKODOWANIE-----------------------------------------
+ function decoding(){
+	let zakodowany_klucz = [];
+	let k;
+	for(let i = 0;i<value_key.length;i++){
+		k =  table.indexOf(value_key[i]);
+		zakodowany_klucz.push(table[(26- k)%26]);	
+	}
+	document.getElementById("inputText4").value = Vigenere_cipher(zakodowany_klucz,Vigenere_cipher(value_key,text_table)).join("");
+}
+ 
 button_binary.addEventListener('click', button_binary_action);
 
 const button_clear = document.querySelector("#clear");
