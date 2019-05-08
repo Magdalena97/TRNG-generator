@@ -29,6 +29,7 @@ body {
 }
 #inputText2 {
     width: 90%;
+    display: block;
 }
 #inputText3 {
     width: 90%;
@@ -36,8 +37,15 @@ body {
 #inputText4 {
     width: 90%;
 }
-
-
+#inputText5 {
+    width: 90%;
+}
+#confirm{
+    float: right; 
+}
+#confirm2{
+    float: right; 
+}
 input[type=text] {
     color: grey;
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
@@ -51,4 +59,14 @@ input[type=text] {
     background-repeat: no-repeat;
     padding: 12px 20px 12px 40px;
   }
- 
+ #encryption {
+    margin-top:20px;
+    background-color: lightgrey;
+    padding: 18px;
+ }
+ #decryption{
+    margin-top:20px;
+    margin-bottom:50px;
+    background-color: rgb(233, 232, 232);
+    padding: 18px;
+ }

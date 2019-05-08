@@ -50,15 +50,25 @@
         <textarea id="binary_output" cols="80" rows="40"></textarea>
     </div>
     <div >
-        <p>Text przed szyfrowaniem</p>
-        <input type="text" id="inputText1" >
-        <p>Klucz szyfrujący</p>
-        <input type="text" id="inputText2" >
-        <button id="confirm">Confirm</button>
-        <p>Zaszyfrowany text</p>
-        <input type="text" id="inputText3">
-        <p>Odszyfrowany text</p>
-        <input type="text" id="inputText4">
+        <div id = "encryption">
+                <h2 >Szyfrowanie</h2>
+                <p>Text przed szyfrowaniem</p>
+                <input type="text" id="inputText1" >
+                <button id="confirm">Confirm</button>
+                <p>Klucz szyfrujący</p>
+                <input type="text" id="inputText2" >
+                <p>Zaszyfrowany text</p>
+                <input type="text" id="inputText3">
+        </div>
+        <div id = "decryption">
+                <h2>Odszyfrowanie</h2>
+                <p>Klucz szyfrujący</p>
+                <input type="text" id="inputText5" >
+                <button id="confirm2">Confirm</button>
+                <p>Odszyfrowany text</p>
+                <input type="text" id="inputText4">
+        </div>
+        
     </div>
     <script src="main.js"></script>
 </body>
