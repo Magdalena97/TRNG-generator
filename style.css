@@ -60,13 +60,18 @@ input[type=text] {
     padding: 12px 20px 12px 40px;
   }
  #encryption {
-    margin-top:20px;
+    margin-top: 20px;
     background-color: lightgrey;
     padding: 18px;
  }
  #decryption{
-    margin-top:20px;
-    margin-bottom:50px;
+    margin-top: 20px;
+    margin-bottom: 50px;
     background-color: rgb(233, 232, 232);
     padding: 18px;
+ } 
+ /*---------------------UPLOAD PAGE CSS-------------------------*/
+ #upload_title{
+    margin: 10px;
+    float: left;
  }

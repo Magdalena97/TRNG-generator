@@ -208,6 +208,7 @@ var znaki = transform_to_bin(canvas_output);
 	
 	key = bin_to_text(to_bin(string));	
 };
+
 //dzielinie ciagu znakow na 8-bitowe ciagi
 function to_bin(string){
 	let binCode = []; 
@@ -217,6 +218,7 @@ function to_bin(string){
 	}
 	return binCode;
 }
+
 //zamiana 8-bitowych ciagów na litery 
 function bin_to_text(to_bin){
 	var binString = '';
@@ -225,21 +227,23 @@ function bin_to_text(to_bin){
 	});
 	return binString;
 }
+
 let text = "";//wartosc tekstu do zaszyfrowania 
 
 const button_confirm = document.querySelector("#confirm");
-//button_confirm.addEventListener('click', confirm_action(key,1));
 button_confirm.addEventListener('click', action1);
 
 const button_confirm2 = document.querySelector("#confirm2"); 
-//button_confirm2.addEventListener('click', confirm_action(document.getElementById("inputText5").value.toUpperCase(),2)); 
 button_confirm2.addEventListener('click',action2);
+
 function action1(){
 	confirm_action(key,1)
 }
+
 function action2(){
 	confirm_action(document.getElementById("inputText5").value.toUpperCase(),2);
 }
+
 function confirm_action(key,number){
 	text = document.getElementById("inputText1").value;//pobieranie z pola tekstu do zaszyfrowania 
 	text = text.toUpperCase();
@@ -292,6 +296,7 @@ function Vigenere_cipher(text_do_kodownia,wartosc_key){
 	}
 	return zakodowane_slowo;
  }
+
  //----------------------DEKODOWANIE-----------------------------------------
  function decoding(key_value){
 	let zakodowany_klucz = [];
@@ -300,11 +305,11 @@ function Vigenere_cipher(text_do_kodownia,wartosc_key){
 		k =  table.indexOf(key_value[i]);
 		zakodowany_klucz.push(table[(26- k)%26]);	
 	}
-	console.log("Wywolalam funcje decoding");
+	/*console.log("Wywolalam funcje decoding");
 	console.log("zmienna text " + text);
 	console.log("drugi arg (Zakodowany klucz)" + zakodowany_klucz);
 	console.log("Pierwszy arg (text)" + Vigenere_cipher(text,key_value))
-	console.log("Co zwraca funkcja szygrujaca w decoding: " + Vigenere_cipher(Vigenere_cipher(text,key_value),zakodowany_klucz));
+	console.log("Co zwraca funkcja szygrujaca w decoding: " + Vigenere_cipher(Vigenere_cipher(text,key_value),zakodowany_klucz));*/
 	document.getElementById("inputText4").value = Vigenere_cipher(Vigenere_cipher(text,key),zakodowany_klucz).join("");
 }
  
@@ -335,3 +340,5 @@ document.querySelector("#numbers_button").addEventListener("click", function() {
 		canvas_output.height = N;
 	}
 });
+//--------------UPLOAD PAGE FUNCTION------------------------------------------------
+
