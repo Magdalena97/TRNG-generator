@@ -8,6 +8,7 @@
     <link rel="stylesheet" type="text/css" media="screen" href="style.css">
     <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
     <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.0/jquery.min.js"></script>
 
 </head>
 <body>
@@ -52,13 +53,21 @@
     <div >
         <div id = "encryption">
                 <h2 >Szyfrowanie</h2>
+                <!--Upload Form-->
+                <form>
+                    <input id="csv" name="csv" type="file" />
+                    <input type="submit" value="submit"/> 
+                </form>
+                <br><br>
                 <p>Text przed szyfrowaniem</p>
-                <input type="text" id="inputText1" >
+                <textarea id="inputText1" cols="80" rows="20"></textarea>
+                <!----<input type="text" id="inputText1" > -->
                 <button id="confirm">Confirm</button>
                 <p>Klucz szyfrujący</p>
                 <input type="text" id="inputText2" >
                 <p>Zaszyfrowany text</p>
-                <input type="text" id="inputText3">
+                <textarea id="inputText3" cols="80" rows="20"></textarea>
+               <!-- <input type="text" id="inputText3"> -->
         </div>
         <div id = "decryption">
                 <h2>Odszyfrowanie</h2>
@@ -66,9 +75,9 @@
                 <input type="text" id="inputText5" >
                 <button id="confirm2">Confirm</button>
                 <p>Odszyfrowany text</p>
-                <input type="text" id="inputText4">
-        </div>
-        
+                <textarea id="inputText4" cols="80" rows="20"></textarea>
+               <!-- <input type="text" id="inputText4">-->
+        </div>   
     </div>
     <script src="main.js"></script>
 </body>

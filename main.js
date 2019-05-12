@@ -185,10 +185,6 @@ var znaki = transform_to_bin(canvas_output);
 				parseInt((value[1]+K*Math.sin(N/Math.PI))%N),
 			];
 		});
-		// for (let a=0; a<discretized.length; a++) {
-		// 	discretized[a][0] = parseInt((discretized[a][0]+discretized[a][1])%N);
-		// 	discretized[a][1] = parseInt(((discretized[a][1]+K*Math.sin(N/Math.PI)))%N);
-		// }
 	}
 
 	discretized.forEach((value, index) => {
@@ -248,6 +244,7 @@ function confirm_action(key,number){
 	text = document.getElementById("inputText1").value;//pobieranie z pola tekstu do zaszyfrowania 
 	text = text.toUpperCase();
 	text = [...text];
+	//console.log("Text: " + text);
 
 	//klucz i pobrany text musza miec ta sama dugość 
 	if(text.length!=key.length){
@@ -255,13 +252,15 @@ function confirm_action(key,number){
 			while(key.length<text.length){
 				key = key.concat(key);
 			}
-			key = key.splice(key-text.length,text.length);
+			key = key.slice(0,text.length);
 		}
 		else{
 			key  = key.slice(0,text.length);
 		}
 	}
-	console.log("Klucz szyfrujacy(key): " + key);
+	//console.log("Klucz szyfrujacy(key): " + key);
+	console.log("Dlugosc textu: " + text.length);
+	console.log("Dlugosc szyfru: " + key.length);
 	if(number===1){
 		document.getElementById("inputText2").value = key;//wyswietlanie klucza w prawidlowym polu
 		document.getElementById("inputText3").value = Vigenere_cipher(text,key).join("");//wypisanie zakodowanego slowa
@@ -270,8 +269,9 @@ function confirm_action(key,number){
 	}
 }
 
+//let table = ["A","Ą","B","C","Ć","D","E","Ę","F","G","H","I","J","K","L","Ł","M","N","Ń","O","Ó","P","Q","R","S","Ś","T","U","V","W","X","Y","Z","Ź","Ż",",",".",":","!","?"," ","(",")"];
 let table = ["A","B","C","D","E","F","G","H","I","J","K","L","M","N","O","P","Q","R","S","T","U","V","W","X","Y","Z"];
-
+console.log("Dlugosc tablicy:" + table.length);
 function Vigenere_cipher(text_do_kodownia,wartosc_key){
 	let index = "";//index z table litery z badanego słowa
 	let przesuniecie = "";//indexz table litery z klucza 
@@ -285,14 +285,19 @@ function Vigenere_cipher(text_do_kodownia,wartosc_key){
 	for(let i=0; i<text_do_kodownia.length;i++){
 		//index litery z tekstu
 		znak1=text_do_kodownia[i];
+		/*console.log("Index : " + i);
+		console.log("Litera z textu: " + znak1);*/
 		index = table.indexOf(znak1);
 		//index litery z hasla
 		znak2=wartosc_key[i];
+		//console.log("Litera z klucza: " + znak2);
 		przesuniecie = table.indexOf(znak2);
 		przesunieta_tab1 = table.slice(0,przesuniecie);
 		przesunieta_tab2 = table.slice(przesuniecie);
 		przesunieta_tab = [...przesunieta_tab2,...przesunieta_tab1];
 		zakodowane_slowo.push(przesunieta_tab[index]);
+		/*console.log("zakodowane slowo: : " + zakodowane_slowo);
+		console.log("--------------------------------");*/
 	}
 	return zakodowane_slowo;
  }
@@ -303,13 +308,16 @@ function Vigenere_cipher(text_do_kodownia,wartosc_key){
 	let k;
 	for(let i = 0;i<key_value.length;i++){
 		k =  table.indexOf(key_value[i]);
-		zakodowany_klucz.push(table[(26- k)%26]);	
+		zakodowany_klucz.push(table[(table.length- k)%table.length]);	
 	}
+	//k =  table.indexOf(key_value[33]);
+	console.log("idex textu: " + k);
+	console.log("Zakodowany klucz: " + zakodowany_klucz[33]);
 	/*console.log("Wywolalam funcje decoding");
 	console.log("zmienna text " + text);
 	console.log("drugi arg (Zakodowany klucz)" + zakodowany_klucz);
-	console.log("Pierwszy arg (text)" + Vigenere_cipher(text,key_value))
-	console.log("Co zwraca funkcja szygrujaca w decoding: " + Vigenere_cipher(Vigenere_cipher(text,key_value),zakodowany_klucz));*/
+	console.log("Pierwszy arg (text)" + Vigenere_cipher(text,key_value))*/
+	//console.log("Co zwraca funkcja szygrujaca w decoding: " + Vigenere_cipher(Vigenere_cipher(text,key_value),zakodowany_klucz));
 	document.getElementById("inputText4").value = Vigenere_cipher(Vigenere_cipher(text,key),zakodowany_klucz).join("");
 }
  
@@ -341,4 +349,23 @@ document.querySelector("#numbers_button").addEventListener("click", function() {
 	}
 });
 //--------------UPLOAD PAGE FUNCTION------------------------------------------------
-
+//form Submit
+$("form").submit(function(evt){	 
+	evt.preventDefault();
+	var formData = new FormData($(this)[0]);//plik ktory wysyłamy
+ $.ajax({
+	 url: 'http://localhost',
+	 type: 'POST',
+	 data: formData,
+	 async: false,
+	 cache: false,
+	 contentType: false,
+	 enctype: 'multipart/form-data',
+	 processData: false,
+	 success: function (response) {
+		document.getElementById("inputText1").value = response;
+		//console.log(response);
+	 }
+ });
+ return false;
+});
